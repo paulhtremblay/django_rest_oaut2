@@ -18,7 +18,6 @@ class DobList(generics.ListCreateAPIView):
     serializer_class = DobSerializer
 
     def get(self, request, *args, **kwargs):
-        print("token is {token}".format(token = request.auth))
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):

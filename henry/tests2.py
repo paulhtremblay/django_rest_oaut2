@@ -3,6 +3,10 @@ from oauth2_provider.models import Application
 from oauth2_provider.models import AccessToken
 from django.contrib.auth.models import User, Permission, Group
 import datetime
+from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
+import pytz
+
 
 class AppTestCase(TestCase):
 
@@ -15,11 +19,16 @@ class AppTestCase(TestCase):
             name='dummy',
             user=user
         )
+        tz = pytz.timezone('US/Pacific')
+        pac_dt = tz.localize(datetime.datetime.now())
         access_token = AccessToken.objects.create(
             user=user,
-            scope='read write',
-            expires=datetime.datetime.now() +
-            datetime.timedelta(seconds=300),
+            scope='read',
+            expires= pac_dt + datetime.timedelta(seconds = 300),
             token='secret-access-token-key',
             application=app
             )
+        client = APIClient()
+        client.force_authenticate(user=user, token = access_token)
+        response=client.get('/henry/', format='json', HTTP_AUTHORIZATION=access_token)
+        self.assertEqual(response.status_code, 200)

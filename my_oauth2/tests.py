@@ -109,8 +109,41 @@ class TestGetToken(unittest.TestCase):
                 }
 
         response = requests.post(self.url, auth=(self.client_id, self.client_secret), data = data)
-        print(response.json())
         self.assertTrue(response.json().get('refresh_token') == None)
+
+    def test_can_access_with_token(self):
+        data = {
+                'grant_type':'password',
+                'username': 'user2',
+                'password':'bluebird',
+                'scope':'read',
+                'expires_in': 3800,
+                }
+        response = requests.post(self.url, auth=(self.client_id, self.client_secret), data = data)
+        self.assertTrue(response.status_code >= 200 and response.status_code < 300)
+        headers = {'Authorization': 'bearer {access_token}'.format(access_token = response.json()['access_token'])}
+        response = requests.get('http://localhost:8000/henry/', headers=headers)
+        self.assertTrue(response.status_code >= 200 and response.status_code < 300)
+
+    def test_refresh_token_can_access_resource(self):
+        data = {
+                'grant_type':'password',
+                'username': 'user4',
+                'password':'bluebird',
+                'scope':'read',
+                }
+        response = requests.post(self.url, auth=(self.client_id, self.client_secret), data = data)
+        data = {
+                'grant_type':'refresh_token',
+                'refresh_token' : response.json()['refresh_token'],
+                }
+
+        response = requests.post(self.url, auth=(self.client_id, self.client_secret), data = data)
+        self.assertTrue(response.status_code >= 200 and response.status_code < 300)
+        self.assertTrue(response.json().get('refresh_token') != None)
+        headers = {'Authorization': 'bearer {access_token}'.format(access_token = response.json()['access_token'])}
+        response = requests.get('http://localhost:8000/henry/', headers=headers)
+        self.assertTrue(response.status_code >= 200 and response.status_code < 300)
 
 if __name__ == '__main__':
     unittest.main()
