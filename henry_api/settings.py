@@ -39,6 +39,7 @@ INSTALLED_APPS = [
      'henry.apps.HenryConfig',
      'my_oauth2.apps.MyOauth2Config',
      'custom.apps.CustomConfig',
+     'contents.apps.ContentsConfig',
      'rest_framework',
     'oauth2_provider',
     'corsheaders',
