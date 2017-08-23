@@ -1,15 +1,11 @@
-from django.test import TestCase
+﻿from django.test import TestCase
 from henry.models import DOB
 import datetime
-#from rest_framework.test import APIRequestFactory
-#from rest_framework.test import RequestsClient
-#from requests.auth import HTTPBasicAuth
 from rest_framework.test import APIClient
 import os
 from django.contrib.auth.models import User, Permission, Group
 from django.test import Client
 from rest_framework.test import force_authenticate
-#from django.test.client import Client
 
 
 
