@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'henry.apps.HenryConfig',
      'perm_oauth2.apps.PermOauth2Config',
+     'custom.apps.CustomConfig',
+     'contents.apps.ContentsConfig',
      'rest_framework',
     'oauth2_provider',
     'corsheaders',

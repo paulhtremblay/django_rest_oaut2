@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^login/$', login),
     url(r'^accounts/login/$', login),
     url('^', include('django.contrib.auth.urls')),
-    #url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^o/', include('perm_oauth2.urls', namespace='permoauth2_provider')),
+    url(r'^custom/', include('custom.urls', namespace='custom')),
+    url(r'^contents/', include('contents.urls', namespace='contents')),
 ]
