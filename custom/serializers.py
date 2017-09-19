@@ -1,5 +1,10 @@
-﻿from rest_framework import serializers
+from rest_framework import serializers
 from henry.models import DOB
+
+class Comment(object):
+    def __init__(self, id, title):
+        self.id = id
+        self.title = title
 
 class DobSerializer(serializers.ModelSerializer):
     class Meta:

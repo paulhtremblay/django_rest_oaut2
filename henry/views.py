@@ -1,5 +1,5 @@
-from henry.models import DOB
-from henry.serializers import DobSerializer
+from henry.models import DOB, NotManaged
+from henry.serializers import DobSerializer, NotManagedSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -32,3 +32,16 @@ class DobDetails(generics.RetrieveUpdateDestroyAPIView):
         return self.update(request, *args, **kwargs)
 
 
+class NotManaged(generics.ListCreateAPIView):
+    permission_classes = [TokenHasScope]
+    required_scopes = ['read']
+    queryset = NotManaged.objects.all()
+    serializer_class = NotManagedSerializer
+
+
+    def get(self, request, *args, **kwargs):
+        #self.queryset = self.queryset.filter(name = 'henry')
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)

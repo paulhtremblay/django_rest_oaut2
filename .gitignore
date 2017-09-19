@@ -1,3 +1,7 @@
 henry/__pycache__/*
+custom/__pycache__/
 henry_api/__pycache__/*
 my_oauth2/__pycache__/*
+custom/migrations/__pycache__/
+perm_oauth2/__pycache__/
+db.sqlite3
